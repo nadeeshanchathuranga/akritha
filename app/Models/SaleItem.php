@@ -15,7 +15,9 @@ class SaleItem extends Model
         'quantity',
         'unit_price',
         'total_price',
-
+        'reason_id',
+        'discount_amount',
+        'discount_type',
     ];
 
 
@@ -28,5 +30,10 @@ class SaleItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id','id');
+    }
+
+    public function returnReason()
+    {
+        return $this->belongsTo(ReturnReason::class, 'reason_id');
     }
 }

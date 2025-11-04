@@ -15,7 +15,7 @@ class SizeController extends Controller
         if (!Gate::allows('hasRole', ['Admin','Manager'])) {
             abort(403, 'Unauthorized');
         }
-        $allsize =Size::orderBy('created_at', 'desc')->get();//
+        $allsize =Size::orderBy('id', 'desc')->get();//
 
         return Inertia::render('Size/Index', [
             'allsize' => $allsize,
@@ -31,7 +31,7 @@ class SizeController extends Controller
 
 
             $validated = $request->validate([
-                'name' => 'required|string|max:191|regex:/^[a-zA-Z0-9\s\-]+$/',
+                'name' => 'required|string|max:191|regex:/^[a-zA-Z\s]+$/',
             ]);
 
 
@@ -44,7 +44,7 @@ class SizeController extends Controller
         if ($request->has('name')) {
             // Validate name directly
             $validated = $request->validate([
-                'name' => 'required|string|max:191|regex:/^[a-zA-Z0-9\s\-]+$/',
+                'name' => 'required|string|max:191|regex:/^[a-zA-Z\s]+$/',
             ]);
 
 
@@ -67,7 +67,7 @@ class SizeController extends Controller
             abort(403, 'Unauthorized');
         }
         $validated = $request->validate([
-            'name' => 'nullable|string|max:191|regex:/^[a-zA-Z0-9\s\-]+$/',
+            'name' => 'nullable|string|max:191|regex:/^[a-zA-Z\s]+$/',
         ]);
 
         $Size->update($validated);

@@ -66,7 +66,6 @@
                   <!-- Product Code -->
                   <p class="pb-6 text-2xl font-bold text-black">
                     <span class="text-[#00000099] font-normal">Product Code: </span>
-                 
                     {{ selectedProduct?.code ?? "N/A" }}
                   </p>
 
@@ -248,20 +247,19 @@ function generateAndPrintBarcodes() {
   const MM_TO_PX = 3.78;
   const LABEL_W_MM = 30;
   const LABEL_H_MM = 18;
-  const INNER_PADDING_MM = 1;
+  const INNER_PADDING_MM = 0.5;
   const GUTTER_MM = 0; // Removed gap - configured in printer
-  const BARCODE_H_MM = 7;
-  const CODE_FZ_PX = 7;
-  const NAME_FZ_PX = 8;
-  const PRICE_FZ_PX = 9;
+  const BARCODE_H_MM = 8; // Reduced from 12
+  const NAME_FZ_PX = 9;
+  const PRICE_FZ_PX = 16; // Increased for better visibility
 
   // Build labels HTML
   const labelsHtml = Array.from({ length: count }).map((_, idx) => `
     <div class="barcode-label">
-      <div class="product-code">${selectedProduct?.code || 'N/A'}</div>
-      <div class="barcode-svg"><svg id="barcode${idx + 1}"></svg></div>
-      <div class="product-price">${(selectedProduct?.selling_price ?? 'N/A')} LKR</div>
       <div class="product-name">${selectedProduct?.name || 'N/A'}</div>
+      <div class="product-name">${selectedProduct?.barcode || 'N/A'}</div>
+      <div class="barcode-svg"><svg id="barcode${idx + 1}"></svg></div>
+      <div class="bottom-info">${(selectedProduct?.selling_price ?? 'N/A')} LKR</div>
     </div>
   `).join('');
 
@@ -294,16 +292,15 @@ function generateAndPrintBarcodes() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           overflow: hidden;
           margin: 0;
-          gap: 0.5mm;
         }
 
-        .product-code {
-          font-size: ${CODE_FZ_PX}px;
+        .product-name {
+          font-size: ${NAME_FZ_PX}px;
           font-weight: 600;
-          line-height: 1;
+          line-height: 1.1;
           width: 100%;
           text-align: center;
           white-space: nowrap;
@@ -311,7 +308,6 @@ function generateAndPrintBarcodes() {
           text-overflow: ellipsis;
           margin: 0;
           padding: 0;
-          color: #333;
         }
 
         .barcode-svg {
@@ -321,7 +317,7 @@ function generateAndPrintBarcodes() {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          margin: 0.3mm 0;
+          margin: 0;
           padding: 0;
         }
         .barcode-svg svg {
@@ -330,7 +326,7 @@ function generateAndPrintBarcodes() {
           display: block;
         }
 
-        .product-price {
+        .bottom-info {
           font-size: ${PRICE_FZ_PX}px;
           font-weight: 700;
           line-height: 1;
@@ -339,21 +335,6 @@ function generateAndPrintBarcodes() {
           text-align: center;
           margin: 0;
           padding: 0;
-          color: #000;
-        }
-
-        .product-name {
-          font-size: ${NAME_FZ_PX}px;
-          font-weight: 500;
-          line-height: 1;
-          width: 100%;
-          text-align: center;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          margin: 0;
-          padding: 0;
-          color: #555;
         }
 
         @media print {
