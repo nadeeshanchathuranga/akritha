@@ -342,6 +342,7 @@ const handlePrintReceipt = () => {
 
     <div class="footer">
       <p>THANK YOU COME AGAIN</p>
+      <p>*** No exchange on purchased items. ***</p>
       <p style="font-weight:bold;">Powered by JAAN Network Ltd.</p>
     </div>
   </div>
