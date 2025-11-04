@@ -253,40 +253,17 @@ const handlePrintReceipt = () => {
 </head>
 <body>
   <div class="receipt-container">
-    <!-- Header -->
-    <div class="header-line">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div style="flex-shrink:0; text-align:right;">
-          <img src="/images/billlogo.png" alt="Company Logo" style="width:60px; height:60px; object-fit:contain;" />
-        </div>
-        <div style="text-align:right; flex-grow:1; padding-left:15px; color:#000;">
-          ${
-            companyInfo?.value?.name
-              ? `<h1 style="margin:0; font-size:16px; font-weight:bold;">${companyInfo.value.name}</h1>`
-              : ""
-          }
-          ${
-            companyInfo?.value?.address
-              ? `<p style="margin:2px 0; font-size:12px;">${companyInfo.value.address}</p>`
-              : ""
-          }
-          ${
-            (companyInfo?.value?.phone || companyInfo?.value?.phone2 || companyInfo?.value?.email)
-              ? `<p style="margin:2px 0; font-size:12px;">
-                   ${companyInfo.value.phone || ""}
-                   ${companyInfo.value.phone2 ? " | " + companyInfo.value.phone2 : ""}
-                   ${companyInfo.value.email ? " | " + companyInfo.value.email : ""}
-                 </p>`
-              : ""
-          }
-          ${
-            companyInfo?.value?.website
-              ? `<p style="margin:2px 0; font-size:12px;">${companyInfo.value.website}</p>`
-              : ""
-          }
-        </div>
-      </div>
-    </div>
+      <div class="header" style="text-align: center; margin-bottom: 10px;">
+            <img src="/images/billlogo.png" style="width: 180px; height: auto; max-height: 80px; margin: 0 auto; margin-bottom: 0; display: block;" />
+  ${companyInfo?.value?.address ? `<p>${companyInfo.value.address}</p>` : ''}
+  ${(companyInfo?.value?.phone || companyInfo?.value?.phone2 || companyInfo?.value?.email)
+            ? `<p>${companyInfo.value.phone || ''}  ${companyInfo.value.phone2 || ''}  ${companyInfo.value.email || ''}</p>`
+            : ''}
+
+
+          </div>
+
+
 
     <div class="info-row">
       <div>
