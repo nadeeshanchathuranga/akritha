@@ -1398,18 +1398,33 @@ const submitBarcode = async () => {
       focusBarcodeField();
     } else {
       isAlertModalOpen.value = true;
-      message.value = fetchedError;
+      message.value = fetchedError || "Product not found with this barcode";
       form.barcode = "";
       focusBarcodeField();
     }
   } catch (err) {
+    console.error("Barcode scan error:", err);
+    
     if (err.response?.status === 422) {
       isAlertModalOpen.value = true;
+      message.value = err.response.data.message || "Validation error occurred";
+    } else if (err.response?.status === 404) {
+      isAlertModalOpen.value = true;
+      message.value = "Product not found with this barcode";
+    } else if (err.response?.status === 500) {
+      isAlertModalOpen.value = true;
+      message.value = "Server error occurred. Please try again or contact support.";
+    } else if (err.response?.data?.message) {
+      isAlertModalOpen.value = true;
       message.value = err.response.data.message;
+    } else if (err.message) {
+      isAlertModalOpen.value = true;
+      message.value = `Error: ${err.message}`;
     } else {
       isAlertModalOpen.value = true;
-      message.value = "An unexpected error occurred. Please try again.";
+      message.value = "An unexpected error occurred. Please check the console for details.";
     }
+    
     form.barcode = "";
     focusBarcodeField();
   }
